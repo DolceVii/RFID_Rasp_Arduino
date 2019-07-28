@@ -18,18 +18,15 @@ void setup()
 }
 void loop() 
 {
-  // Look for new cards
   if ( ! mfrc522.PICC_IsNewCardPresent()) 
   {
     digitalWrite(LED,LOW);
     return;
   }
-  // Select one of the cards
   if ( ! mfrc522.PICC_ReadCardSerial()) 
   {
     return;
   }
-  //Show UID on serial monitor
   String content= "";
   byte letter;
   for (byte i = 0; i < mfrc522.uid.size; i++) 
