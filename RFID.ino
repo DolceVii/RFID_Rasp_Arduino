@@ -5,13 +5,13 @@
 
 #define SS_PIN 10
 #define RST_PIN 9
-MFRC522 mfrc522(SS_PIN, RST_PIN);   // Create MFRC522 instance.
+MFRC522 mfrc522(SS_PIN, RST_PIN);
  
 void setup() 
 {
-  Serial.begin(9600);   // Initiate a serial communication
-  SPI.begin();      // Initiate  SPI bus
-  mfrc522.PCD_Init();   // Initiate MFRC522
+  Serial.begin(9600);
+  SPI.begin();
+  mfrc522.PCD_Init();
   
   pinMode(LED, OUTPUT);
   digitalWrite(LED, LOW);
