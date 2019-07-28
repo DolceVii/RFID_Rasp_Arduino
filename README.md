@@ -9,5 +9,5 @@ and checks if user has access. Raspberry records the movement on the sqlite data
 
 The arduino library can be downloaded from: https://github.com/miguelbalboa/rfid
 
-also read: https://playground.arduino.cc/Learning/MFRC522/
+Also read: https://playground.arduino.cc/Learning/MFRC522/
 
