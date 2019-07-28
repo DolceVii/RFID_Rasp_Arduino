@@ -12,3 +12,5 @@ The arduino library can be downloaded from: https://github.com/miguelbalboa/rfid
 Also read: https://playground.arduino.cc/Learning/MFRC522/
 
 Help to install sqlite3 to Raspberry Pi: https://randomnerdtutorials.com/sqlite-database-on-a-raspberry-pi/
+
+Help to install phpliteadmin to Raspberyy Pi: http://www.raspberrypirobotics.com/how-to-install-phpliteadmin-database/
