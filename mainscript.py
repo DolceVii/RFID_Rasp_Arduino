@@ -1,4 +1,4 @@
-# !/usr/bin/python3
+#!/usr/bin/python3
 
 import RPi.GPIO as GPIO
 import sqlite3
@@ -47,8 +47,8 @@ def main():
         try:
             connection = sqlite3.connect(database)
             cursor = connection.cursor()
-            val = ('1', who, username, now, data)
-            cursor.execute ("INSERT INTO data (door, who, UserName, day, isactive) VALUES (?, ?, ?, ?, ?)", (val))
+            val = ('1', who, username, now)
+            cursor.execute ("INSERT INTO data (door, who, UserName, day) VALUES (?, ?, ?, ?)", (val))
             connection.commit()
             connection.close()
         except Exception:
