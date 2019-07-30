@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+# !/usr/bin/python3
 
 import RPi.GPIO as GPIO
 import sqlite3
@@ -10,6 +10,9 @@ global database
 global who
 global username
 global data
+global runok
+
+runok = 0
 
 database = "/var/www/html/database/raspberry.db"
 
@@ -27,6 +30,7 @@ def main():
 
     def rserial():
         global who
+        global runok
         try:
             ser=serial.Serial("/dev/ttyUSB0",9600)
             ser.baudrate = 9600
@@ -36,28 +40,34 @@ def main():
             who = who.rstrip("\\r\\n")
             who = who.rstrip(" ")
             ser.close()
+            runok == 0
         except Exception:
             print("Error USB chek usb connection and try again")
+            runok = 1
     
     def wsql():
         global who
         global username
+        global runok
         if username == "None":
             username = "Άγνωστος"
         try:
             connection = sqlite3.connect(database)
             cursor = connection.cursor()
-            val = ('1', who, username, now)
-            cursor.execute ("INSERT INTO data (door, who, UserName, day) VALUES (?, ?, ?, ?)", (val))
+            val = ('1', who, username, now, data)
+            cursor.execute ("INSERT INTO data (door, who, UserName, day, isactive) VALUES (?, ?, ?, ?, ?)", (val))
             connection.commit()
             connection.close()
+            runok == 0
         except Exception:
             print("Error MySQL check Mysql server and try again")
+            runok = 1
 
     def rsql():
         global who
         global data
         global username
+        global runok
         try:
             connection = sqlite3.connect(database)
             cursor = connection.cursor()
@@ -69,29 +79,33 @@ def main():
             username = username.replace("('","")
             username = username.replace("',)","")
             connection.close()
+            runok == 0
         except Exception:
             print("Erorr SQL connection check and try again")
+            runok = 1
 
     while True:
         global username
-
-        rserial()
-        rsql()
-        wsql()
+        if runok == 0:
+            rserial()
+        if runok == 0:
+            rsql()
+        if runok == 0:
+            wsql()
         
-        if username == "None":
-            username = "Άγνωστος"
+            if username == "None":
+                username = "Άγνωστος"
             
-        if data == 1:
-            print("The user: " + username + ", with ID: " + who + ", has access!")
-            GPIO.output(DoorRelay, GPIO.HIGH)
-            time.sleep(1)
-            GPIO.output(DoorRelay, GPIO.LOW)
-        else:
-            print("The user: " + username + ", with ID: " + who + ", has no access!")
-            GPIO.output(DoorRelay, GPIO.LOW)
-
-        time.sleep(3)
+            if data == 1:
+                print("The user: " + username + ", with ID: " + who + ", has access!")
+                GPIO.output(DoorRelay, GPIO.HIGH)
+                time.sleep(1)
+                GPIO.output(DoorRelay, GPIO.LOW)
+            else:
+                print("The user: " + username + ", with ID: " + who + ", has no access!")
+                GPIO.output(DoorRelay, GPIO.LOW)
+            
+            time.sleep(3)
 
 if __name__== "__main__":
     main()
