@@ -44,6 +44,7 @@ def main():
         except Exception:
             print("Error USB chek usb connection and try again")
             runok = 1
+            time.sleep(1)
     
     def wsql():
         global who
@@ -62,6 +63,7 @@ def main():
         except Exception:
             print("Error MySQL check Mysql server and try again")
             runok = 1
+            time.sleep(1)
 
     def rsql():
         global who
@@ -83,6 +85,7 @@ def main():
         except Exception:
             print("Erorr SQL connection check and try again")
             runok = 1
+            time.sleep(1)
 
     while True:
         global username
@@ -106,6 +109,7 @@ def main():
                 GPIO.output(DoorRelay, GPIO.LOW)
             
             time.sleep(3)
+        time.sleep(1)
 
 if __name__== "__main__":
     main()
